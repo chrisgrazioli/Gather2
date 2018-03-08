@@ -30,14 +30,29 @@ describe('Server path: /items/create', () => {
       //exercise
       const response =  await request(app)
         .get('/items/create');
-      console.log(response.body);
-      console.log(response.text);
-      assert.include(parseTextFromHTML(response.text, 'input#title-input'), '');
-      assert.include(parseTextFromHTML(respose.text, 'input#imageUrl-input'), '');
-      assert.include(parseTextFromHTML(response.text, 'textarea#description-input'), '');
       //verify
-
+      //console.log(response.body);
+      //console.log(response.text);
+      assert.include(parseTextFromHTML(response.text, 'input#title-input'), '');
+      assert.include(parseTextFromHTML(response.text, 'input#imageUrl-input'), '');
+      assert.include(parseTextFromHTML(response.text, 'textarea#description-input'), '');
     });
   });
 
+  describe('POST', ()=>{
+    it('create a new item and render', async ()=>{
+      const itemToCreate = buildItemObject();
+      const response = await request(app)
+        .post('/items/create')
+        .type('form')
+        .send(itemToCreate);
+
+      assert.include(parseTextFromHTML(response.text, '.item-title'),itemToCreate.title);
+      const imageElement = findImageElementBySource(response.text, itemToCreate.imageUrl);
+      assert.equal(imageElement.src, itemToCreate.imageUrl);
+
+
+
+    });
+  });
 });

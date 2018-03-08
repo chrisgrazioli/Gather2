@@ -8,8 +8,13 @@ router.get('/', async (req, res, next) => {
 });
 
 // Add additional routes below:
-router.get('/items/create', (req, res, next)=>{
+router.get('/items/create', (req, res, next) => {
   res.render('create');
+});
+
+router.post('/items/create', async (req, res, next) => {
+  console.log(req.body);
+  res.render('index', {items:[req.body]});
 });
 
 
