@@ -12,7 +12,7 @@ describe('User visits root', () => {
       // Setup
       browser.url('/');
       // Exercise
-      browser.click('a[href="create.html"]');
+      browser.click('a[href="create.html"]'); //does this need to be create.html
       // Verification
       assert.include(browser.getText('body'), 'Create');
     });
